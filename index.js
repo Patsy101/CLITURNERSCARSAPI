@@ -41,8 +41,54 @@ const findCustomer = (name) => {
     });
 };
 
+// Update customer
+const updateCustomer = (_id, customer) => {
+  Customer.updateOne({ _id }, customer)
+    .then(() => {
+      console.info('Customer Updated');
+      mongoose.connection.close(); // Close the database connection when done
+    })
+    .catch((error) => {
+      console.error('Error updating customer:', error);
+      mongoose.connection.close(); // Close the database connection in case of an error
+    });
+};
+
+// Remove customer
+const removeCustomer = (_id) => {
+  Customer.deleteOne({ _id })
+    .then(() => {
+      console.info('Customer Removed');
+      mongoose.connection.close(); // Close the database connection when done
+    })
+    .catch((error) => {
+      console.error('Error removing customer:', error);
+      mongoose.connection.close(); // Close the database connection in case of an error
+    });
+};
+
+// List Customers
+const listCustomer = () => {
+  Customer.find()
+    .then((customers) => {
+      console.info(customers);
+      console.info(`${customers.length} matches`);
+      mongoose.connection.close(); // Close the database connection when done
+    })
+    .catch((error) => {
+      console.error('Error listing customers:', error);
+      mongoose.connection.close(); // Close the database connection in case of an error
+    });
+};
+
 // Export addCustomer and findCustomer methods
-module.exports = { addCustomer, findCustomer };
+module.exports = {
+  addCustomer,
+  findCustomer,
+  updateCustomer,
+  removeCustomer,
+  listCustomer,
+};
 
 // const mongoose = require('mongoose');
 

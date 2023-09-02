@@ -1,5 +1,13 @@
+#!/usr/bin/env node
+
 const program = require('commander');
-const { addCustomer, findCustomer } = require('./index');
+const {
+  addCustomer,
+  findCustomer,
+  updateCustomer,
+  removeCustomer,
+  listCustomer,
+} = require('./index');
 
 program.version('1.0.0').description('Client Management System');
 
@@ -25,7 +33,7 @@ const questions = [
     message: 'Customer Phone Address',
   },
 ];
-
+//adding command
 program
   .command('add')
   .alias('a')
@@ -37,13 +45,37 @@ program
       addCustomer(answers);
     });
   });
-
+//find command
 program
   .command('find <name>')
   .alias('f')
   .description('Find a customer')
   .action((name) => findCustomer(name));
+//update command
+program
+  .command('update <_id>')
+  .alias('u')
+  .description('Update a customer')
+  .action((_id) => {
+    import('inquirer').then(async (inquirer) => {
+      const { prompt } = inquirer.default; // Use .default to access inquirer
+      const answers = await prompt(questions);
+      updateCustomer(_id, answers);
+    });
+  });
 
+//Remove command
+program
+  .command('remove <_id>')
+  .alias('r')
+  .description('Remove a customer')
+  .action((_id) => removeCustomer(_id));
+// List command
+program
+  .command('list')
+  .alias('l')
+  .description('list a customers')
+  .action(() => listCustomer());
 program.parse(process.argv);
 
 // const program = require('commander');
