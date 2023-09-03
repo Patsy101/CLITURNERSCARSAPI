@@ -13,62 +13,62 @@ mongoose.connect('mongodb://127.0.0.1:27017/turnerscarsapi', {
 const Customer = require('./models/customer.js');
 
 // Add Customer
-const addCustomer = (customer) => {
+const addCar = (customer) => {
   Customer.create(customer)
     .then((createdCustomer) => {
-      console.info('New Customer Added:', createdCustomer);
+      console.info('New Car Added:', createdCustomer);
       mongoose.connection.close(); // Close the database connection when done
     })
     .catch((error) => {
-      console.error('Error adding customer:', error);
+      console.error('Error adding car:', error);
       mongoose.connection.close(); // Close the database connection in case of an error
     });
 };
 
 // Find Customer
-const findCustomer = (name) => {
+const findCar = (name) => {
   // Make case insensitive
   const search = new RegExp(name, 'i');
-  Customer.find({ $or: [{ firstname: search }, { lastname: search }] })
-    .then((customers) => {
-      console.info(customers);
-      console.info(`${customers.length} matches`);
+  Customer.find({ $or: [{ Make: search }, { Model: search }] })
+    .then((cars) => {
+      console.info(cars);
+      console.info(`${cars.length} matches`);
       mongoose.connection.close(); // Close the database connection when done
     })
     .catch((error) => {
-      console.error('Error finding customer:', error);
+      console.error('Error finding cars:', error);
       mongoose.connection.close(); // Close the database connection in case of an error
     });
 };
 
 // Update customer
-const updateCustomer = (_id, customer) => {
+const updateCar = (_id, customer) => {
   Customer.updateOne({ _id }, customer)
     .then(() => {
-      console.info('Customer Updated');
+      console.info('Car Updated');
       mongoose.connection.close(); // Close the database connection when done
     })
     .catch((error) => {
-      console.error('Error updating customer:', error);
+      console.error('Error updating car:', error);
       mongoose.connection.close(); // Close the database connection in case of an error
     });
 };
 
 // Remove customer
-const removeCustomer = (_id) => {
+const removeCar = (_id) => {
   Customer.deleteOne({ _id })
     .then(() => {
-      console.info('Customer Removed');
+      console.info('Car Removed');
       mongoose.connection.close(); // Close the database connection when done
     })
     .catch((error) => {
-      console.error('Error removing customer:', error);
+      console.error('Error removing car:', error);
       mongoose.connection.close(); // Close the database connection in case of an error
     });
 };
 
 // List Customers
-const listCustomer = () => {
+const listCar = () => {
   Customer.find()
     .then((customers) => {
       console.info(customers);
@@ -76,52 +76,16 @@ const listCustomer = () => {
       mongoose.connection.close(); // Close the database connection when done
     })
     .catch((error) => {
-      console.error('Error listing customers:', error);
+      console.error('Error listing cars:', error);
       mongoose.connection.close(); // Close the database connection in case of an error
     });
 };
 
 // Export addCustomer and findCustomer methods
 module.exports = {
-  addCustomer,
-  findCustomer,
-  updateCustomer,
-  removeCustomer,
-  listCustomer,
+  addCar,
+  findCar,
+  updateCar,
+  removeCar,
+  listCar,
 };
-
-// const mongoose = require('mongoose');
-
-// //Map global promise -to get rid of warning
-// mongoose.Promise = global.Promise;
-// //connecting to database
-// const db = mongoose.connect('mongodb://localhost:27017/turnerscarsapi', {
-//   useMongoClient: true,
-//   useUnifiedTopology: true,
-// });
-
-// //Importing Model
-// const Customer = require('./models/customer.js');
-
-// //Add Customer
-// const addCustomer = (customer) => {
-//   Customer.create(customer).then((customer) => {
-//     console.info('New Customer Added');
-//     db.close();
-//   });
-// };
-// //Find Customer
-// const findCustomer = (name) => {
-//   //Make case insensitive
-//   const search = new RegExp(name, 'i');
-//   Customer.find({ $or: [{ firstname: search }, { lastname: search }] }).then(
-//     (customer) => {
-//       console.info(customer);
-//       console.info(`${customer.length} matches`);
-//       db.close();
-//     }
-//   );
-// };
-
-// //Export All methods
-// module.exports = { addCustomer, findCustomer };

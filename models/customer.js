@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 //Cars Schema
 
 const customerSchema = mongoose.Schema({
-  firstname: { type: String },
-  lastname: { type: String },
-  phone: { type: String },
-  email: { type: String },
+  Make: { type: String },
+  Model: { type: String },
+  Year: { type: String },
+  Amount: { type: String },
 });
 
 //Define and export
-module.exports = mongoose.model('Customer', customerSchema);
+module.exports = mongoose.model('Cars', customerSchema);

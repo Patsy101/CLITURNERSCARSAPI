@@ -1,66 +1,60 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const {
-  addCustomer,
-  findCustomer,
-  updateCustomer,
-  removeCustomer,
-  listCustomer,
-} = require('./index');
+const { addCar, findCar, updateCar, removeCar, listCar } = require('./index');
 
 program.version('1.0.0').description('Client Management System');
 
 const questions = [
   {
     type: 'input',
-    name: 'firstname',
-    message: 'Customer First Name',
+    name: 'Make',
+    message: 'Make Car',
   },
   {
     type: 'input',
-    name: 'lastname',
-    message: 'Customer Last Name',
+    name: 'Model',
+    message: 'Make Model',
   },
   {
     type: 'input',
-    name: 'email',
-    message: 'Customer Email Address',
+    name: 'Year',
+    message: 'Make Year',
   },
   {
     type: 'input',
-    name: 'phone',
-    message: 'Customer Phone Address',
+    name: 'Amount',
+    message: 'Amount Willing to Pay',
   },
 ];
 //adding command
 program
   .command('add')
   .alias('a')
-  .description('Add a customer')
+  .description('Add a car')
   .action(() => {
     import('inquirer').then(async (inquirer) => {
       const { prompt } = inquirer.default; // Use .default to access inquirer
       const answers = await prompt(questions);
-      addCustomer(answers);
+      addCar(answers);
     });
   });
 //find command
 program
   .command('find <name>')
   .alias('f')
-  .description('Find a customer')
-  .action((name) => findCustomer(name));
+  .description('Find a car')
+  .action((name) => findCar(name));
 //update command
 program
   .command('update <_id>')
   .alias('u')
-  .description('Update a customer')
+  .description('Update a car')
   .action((_id) => {
     import('inquirer').then(async (inquirer) => {
       const { prompt } = inquirer.default; // Use .default to access inquirer
       const answers = await prompt(questions);
-      updateCustomer(_id, answers);
+      updateCar(_id, answers);
     });
   });
 
@@ -68,62 +62,12 @@ program
 program
   .command('remove <_id>')
   .alias('r')
-  .description('Remove a customer')
-  .action((_id) => removeCustomer(_id));
+  .description('Remove a car')
+  .action((_id) => removeCar(_id));
 // List command
 program
   .command('list')
   .alias('l')
-  .description('list a customers')
-  .action(() => listCustomer());
+  .description('list a cars')
+  .action(() => listCar());
 program.parse(process.argv);
-
-// const program = require('commander');
-// //making it user friendly
-
-// const { prompt } = require('inquirer');
-
-// const { addCustomer, findCustomer } = require('./index');
-// //Customer Questions
-// const questions = [
-//   {
-//     type: 'input',
-//     name: 'firstname',
-//     message: 'Customer First Name',
-//   },
-//   {
-//     type: 'input',
-//     name: 'lastname',
-//     message: 'Customer Last Name',
-//   },
-//   {
-//     type: 'input',
-//     name: 'email',
-//     message: 'Customer Email Address',
-//   },
-// ];
-
-// program.version('1.0.0').description('Client Management System');
-
-// // program
-// //   .command('add <firstname> <lastname> <phone> <email>')
-// //   .alias('a')
-// //   .description('Add a customer')
-// //   .action((firstname, lastname, phone, email) => {
-// //     addCustomer({ firstname, lastname, phone, email });
-// //   });
-
-// program
-//   .command('add')
-//   .alias('a')
-//   .description('Add a customer')
-//   .action(() => {
-//     prompt(questions).then((answers) => addCustomer(answers));
-//   });
-
-// program
-//   .command('find <name>')
-//   .alias('f')
-//   .description('Find a customer')
-//   .action((name) => findCustomer(name));
-// program.parse(process.argv);
