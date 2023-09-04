@@ -7,6 +7,15 @@ const customerSchema = mongoose.Schema({
   Model: { type: String },
   Year: { type: String },
   Amount: { type: String },
+  createdAt: {
+    type: Date,
+    immutable: true,
+    default: () => Date.now(),
+  },
+  updatedAt: {
+    type: Date,
+    default: () => Date.now(),
+  },
 });
 
 //Define and export
